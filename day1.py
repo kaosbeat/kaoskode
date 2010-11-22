@@ -10,4 +10,18 @@ but we're not there yet
 
 on the way I will learn python, git and explore other stuff
 odds are I won't even finish todays session
+
+did I mention, in order to learn git I will always return to a point I liked and from where I want to re-evolve
 '''
+size(400,400)
+#different colors are essential to actually seeing stuff 
+colors = ximport("colors")
+
+background(colors.black())
+# we want the background black like the night from which beaty will rise (it's winter and it's late)
+stroke(colors.white())
+#I heard there's some good contrast between those colors
+
+#lets do rectangles
+rect(1,1,18,18)
+
