@@ -7,7 +7,6 @@ so the basic idea is:
     - and changes the profilepic of @kaoskode with link to the blog 
     
 but we're not there yet
-
 on the way I will learn python, git and explore other stuff
 odds are I won't even finish todays session
 
@@ -23,5 +22,7 @@ stroke(colors.white())
 #I heard there's some good contrast between those colors
 
 #lets do rectangles
-rect(1,1,18,18)
+for l in range (HEIGHT/20+1):
+    for i in range(WIDTH/20):
+        rect(i*20,(l*20)-20,18,18)
 
