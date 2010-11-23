@@ -35,6 +35,17 @@ for l in range (HEIGHT/20):
 
 
 #add a park
-
-park = rect(random(18)*20, random(18)*20, 80,60)
+parkX = random(18)*20
+parkY = random(18)*20
+parksizeX = 80
+parksizeY = 60
+park = rect(parkX, parkY, parksizeX,parksizeY)
 park.fill = colors.green()
+
+#add people in the park
+for l in range(random(100)):
+    person = rect(parkX+random(parksizeX), parkY+random(parksizeY), 1,1)
+    person.stroke = colors.black()  
+    
+
+
