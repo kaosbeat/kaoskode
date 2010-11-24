@@ -49,3 +49,11 @@ for l in range(random(100)):
     
 
 
+#add clouds
+for c in range(10):
+    cX = random(50)*c
+    cY = random(50)*c
+    for cl in range(30): 
+        cloud = oval(cX+random(20)+cl,cY+random(20),10,20)
+        cloud.fill = color(1,0.9,0.9,0.5)
+        cloud.stroke = None
