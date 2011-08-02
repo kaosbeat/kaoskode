@@ -36,6 +36,9 @@ void toggleColor() {
 
 void drawlines()
 {
+    
+   strokeWeight(random(5));  
+   toggleColor();   
    int x = int(random(269));
    int y = int(random(269));
    int l = int(random(269));
@@ -50,7 +53,7 @@ void drawconlines()
    int l = int(random(269));
    int k = int(random(269));
    line(x,y,l,k);
-   for (int i = 1; i < 10; i++) {
+   for (int i = 1; i < 100; i++) {
       line(x+2*i,y-2*i,l+3*i,k+4*i);
       strokeWeight(i/2);
    }
