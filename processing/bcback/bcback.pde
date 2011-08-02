@@ -7,11 +7,57 @@ void setup()
 }
 
 void draw(){
- if KeyPressed() {
-   if (key == "b"){
-  balls(); 
-   }
+ if(keyPressed) {
+    if (key == 'b'){
+      balls();
+    } else if ( key == 'B') {
+      toggleColor();
+      balls();
+    } else if (key == 'l' || key == 'L') {
+      drawlines();
+    } else if (key == 'c' || key == 'C') {
+      toggleColor();
+    } else if (key == 'R') {
+      drawconlines();
+    }
+ }
 }
+
+void toggleColor() {
+   int r = int(random(255));
+   int g = int(random(255));
+   int b = int(random(255));
+   int a = int(random(255));
+   fill(r,g,b,a);
+   stroke(r,g,b); 
+  
+}
+
+
+void drawlines()
+{
+   int x = int(random(269));
+   int y = int(random(269));
+   int l = int(random(269));
+   int k = int(random(269));
+   line(x,y,l,k); 
+}
+
+void drawconlines()
+{
+   int x = int(random(269));
+   int y = int(random(269));
+   int l = int(random(269));
+   int k = int(random(269));
+   line(x,y,l,k);
+   for (int i = 1; i < 10; i++) {
+      line(x+2*i,y-2*i,l+3*i,k+4*i);
+      strokeWeight(i/2);
+   }
+   strokeWeight(1);  
+   toggleColor();   
+}
+
 
 
 void balls()
@@ -22,6 +68,6 @@ void balls()
    int y = int(random(269));
    int r = int(random(269)/5);
    int s = int(random(269)/5);
-   ellipse(x,y,r,r);
+   ellipse(x,y,r,s);
  }
 }
