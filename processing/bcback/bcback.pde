@@ -6,9 +6,17 @@ void setup()
   smooth();
 }
 
+void draw(){
+ if KeyPressed() {
+   if (key == "b"){
+  balls(); 
+   }
+}
 
-void draw()
+
+void balls()
 {
+  
  for(int i=0; i<10; i+=1) {
    int x = int(random(269));
    int y = int(random(269));
