@@ -1,0 +1,37 @@
+#pseudopythonscript to get patents of google, analyse them divide the images into components, bname them and save them in an output directory
+
+###imagecrawler###
+wget save python png nicely named into srcDIR
+
+
+###track down different contours using openCV on images in srcDIR
+
+A CvSeq is a Python sequence:
+
+seq = cv.FindContours(scribble, storage, cv.CV_RETR_CCOMP, cv.CV_CHAIN_APPROX_SIMPLE)
+# Seq is a sequence of point pairs
+print len(seq)
+for (x,y) in seq:
+  print (x,y)
+print seq[10]
+print seq[::-1]
+print sorted(list(seq))
+
+h_prev, h_next, v_prev, v_next are methods that yield other CvSeq objects:
+
+>>> print seq.v_next()
+<opencv.cvseq object at 0x2b4460>
+
+For example to traverse a tree depth-first:
+
+def traverse(seq):
+  while seq:
+    traverse(seq.v_next())    # Recurse on children
+    seq = seq.h_next()        # Next sibling
+
+###save each contour to img###
+img = cv.LoadImage("foo.jpg")
+sub = cv.CreateImageHeader((10,10), cv.IPL_DEPTH_8U, 1)  # Parameters overwritten anyway...
+cv.GetSubRect(img, sub, (0, 0, 32, 32))  # sub is 32x32 patch from image top-left
+
+
