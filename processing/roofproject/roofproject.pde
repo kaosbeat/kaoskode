@@ -33,12 +33,12 @@ float smoothStep=0.15;
  
 
 int viewX = 0; 
-float eyeX = 0;
-float eyeY = 0;
-float eyeZ = 0;
-float centerX = 0;
-float centerY = 0;
-float centerZ = 0;
+float eyeX = 500;
+float eyeY = 500;
+float eyeZ = 312;
+float centerX = 25;
+float centerY = -460;
+float centerZ = -275;
 
 void interpolatePlane() {
   //Vec3D[] ab = new Vec3D(a.interpolateTo(b, -0.5));
@@ -85,11 +85,11 @@ void controller() {
   controlWindow = controlP5.addControlWindow("controlP5window",100,100,400,200);
   controlP5.addButton("Mode", 0,100,120,80,19).setWindow(controlWindow);
   controlP5.addButton("Export", 0,100,140,80,19).setWindow(controlWindow);
-  controlP5.addSlider("eyeX",-500,500,10,10,10,80,19).setWindow(controlWindow);
-  controlP5.addSlider("eyeY",-500,500,30,10,30,80,19).setWindow(controlWindow);
-  controlP5.addSlider("eyeZ",-500,500,50,10,50,80,19).setWindow(controlWindow);
-  controlP5.addSlider("centerX",-500,500,10,140,10,80,19).setWindow(controlWindow);
-  controlP5.addSlider("centerY",-500,500,30,140,30,80,19).setWindow(controlWindow);
+  controlP5.addSlider("eyeX",-500,500,500,10,10,80,19).setWindow(controlWindow);
+  controlP5.addSlider("eyeY",-1500,1500,-800,10,30,80,19).setWindow(controlWindow);
+  controlP5.addSlider("eyeZ",-1500,1500,800,10,50,80,19).setWindow(controlWindow);
+  controlP5.addSlider("centerX",-500,500,25,140,10,80,19).setWindow(controlWindow);
+  controlP5.addSlider("centerY",-1500,1500,-760,140,30,80,19).setWindow(controlWindow);
   controlP5.addSlider("centerZ",-500,500,50,140,50,80,19).setWindow(controlWindow);
 }
 
