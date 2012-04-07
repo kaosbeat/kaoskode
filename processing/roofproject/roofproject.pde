@@ -41,15 +41,25 @@ float centerY = -460;
 float centerZ = -275;
 
 void interpolatePlane() {
-  //Vec3D[] ab = new Vec3D(a.interpolateTo(b, -0.5));
+ // Vec3D[] ab= new Vec3D(a.interpolateTo(b, -0.5));
   float ablen = a.distanceTo(b);
-  zoomLens.setLensPos(ablen*random(0,1),smoothStep);
+  println(ablen);
+  zoomLens.setLensPos(200,smoothStep);
   zoomLens.setLensStrength((10 * 0.5f) / (50 * 0.5f),smoothStep);
   for (float x = 0; x < ablen; x++) {
     float t = x / ablen;
     float y = zoomLens.interpolate(0, ablen, t);
      if (0 == x % 10) {
-      mesh.addFace(a,new Vec3D(a.interpolateTo(b,t)),c);
+      mesh.addFace(a,ab[x],e);
+      Vec3D beam_size = new Vec3D(5,17,ab[x]);
+      TriangleMesh beam=(TriangleMesh)new AABB(new Vec3D(), beam_size).toMesh();
+    // align the Z axis of the box with the direction vector
+      beam.pointTowards(e);
+    // move the box to the correct position
+    beam.transform(new Matrix4x4().translateSelf(e.x,e.y,e.z));
+      
+      
+      
     }
     
   }
@@ -71,11 +81,9 @@ void setup() {
 void frameWork() {
 
  mesh.addFace(a,b,d );
- fill(25,60,80);
  mesh.addFace(a,c,d );
  mesh.addFace(a,b,e );
  mesh.addFace(f,b,e );
- fill(255,5,90);
  mesh.setName("abcd");
 }
 
@@ -85,12 +93,12 @@ void controller() {
   controlWindow = controlP5.addControlWindow("controlP5window",100,100,400,200);
   controlP5.addButton("Mode", 0,100,120,80,19).setWindow(controlWindow);
   controlP5.addButton("Export", 0,100,140,80,19).setWindow(controlWindow);
-  controlP5.addSlider("eyeX",-500,500,500,10,10,80,19).setWindow(controlWindow);
-  controlP5.addSlider("eyeY",-1500,1500,-800,10,30,80,19).setWindow(controlWindow);
-  controlP5.addSlider("eyeZ",-1500,1500,800,10,50,80,19).setWindow(controlWindow);
-  controlP5.addSlider("centerX",-500,500,25,140,10,80,19).setWindow(controlWindow);
-  controlP5.addSlider("centerY",-1500,1500,-760,140,30,80,19).setWindow(controlWindow);
-  controlP5.addSlider("centerZ",-500,500,50,140,50,80,19).setWindow(controlWindow);
+  controlP5.addSlider("eyeX",-1500,1500,-500,10,10,80,19).setWindow(controlWindow);
+  controlP5.addSlider("eyeY",-1500,1500,-750,10,30,80,19).setWindow(controlWindow);
+  controlP5.addSlider("eyeZ",-1500,1500,-225,10,50,80,19).setWindow(controlWindow);
+  controlP5.addSlider("centerX",-1500,1500,500,140,10,80,19).setWindow(controlWindow);
+  controlP5.addSlider("centerY",-1500,1500,-1012,140,30,80,19).setWindow(controlWindow);
+  controlP5.addSlider("centerZ",-1500,1500,-500,140,50,80,19).setWindow(controlWindow);
 }
 
 
