@@ -135,8 +135,9 @@ void controller() {
   r.setColorForeground(color(120)); r.setColorActive(color(255)); r.setColorLabel(color(255)); r.setItemsPerRow(5); r.setSpacingColumn(50);
   for(int i =0; i < mesh.getNumFaces(); i++){
    addToRadioButton(r,"triangle"+i,i);
+  } 
   */  
-} 
+
 
 }
 
@@ -147,6 +148,14 @@ void addToRadioButton(RadioButton theRadioButton, String theName, int theValue )
   t.captionLabel().style().moveMargin(-2,0,0,-3);
   t.captionLabel().style().backgroundWidth = 46;
 }
+
+void divideAll() {
+  for(int i=0; i < mesh.getNumFaces(); i++) {
+    int[] faces = mesh.getFacesAsArray();
+    divideEqual(mesh.faces.get(i).a,mesh.faces.get(i).b,mesh.faces.get(i).c);
+  }
+}
+
 
 
 void draw() {
@@ -160,7 +169,8 @@ void draw() {
   fill(255);
   gfx.mesh(mesh);
   //drawLines(a,b,e,"blah", e);
-  divideEqual(e,b,a);
+  //divideEqual(e,b,a);
+  divideAll();
 }
 
 
@@ -178,7 +188,7 @@ void keyPressed() {
     int[] faces = mesh.getFacesAsArray();
     mesh.translate(new Vec3D(-20,-20,-20));
    // mesh.setName("blaah");
-    println(mesh.getMeshAsVertexArray());
+    //println(mesh.getMeshAsVertexArray());
     println(a.interpolateTo(b, 2.5));
     //mesh = new Vec3D(20,20,20);
   }
