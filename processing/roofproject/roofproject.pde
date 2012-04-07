@@ -37,6 +37,7 @@ float eyeZ = 312;
 float centerX = 25;
 float centerY = -460;
 float centerZ = -275;
+int divideBy = 5;
 
 void interpolatePlane(int divisions) {
   //Vec3D[] ab = new Vec3D(a.interpolateTo(b, -0.5));
@@ -76,19 +77,18 @@ void drawLines(Vec3D x,Vec3D y,Vec3D z, String interpolationmethod, Vec3D dir) {
   
 }
 
-void divideEqual(Vec3D x, Vec3D y, Vec3D z, int i) {
+void divideEqual(Vec3D x, Vec3D y, Vec3D z) {
   Line3D xyline = new Line3D(x,y);
-  float xylen = xyline.getLength(); 
-  float seglength = xylen/i;
+  float xylen = xyline.getLength();
+  float seglength = xylen/divideBy;
+  println(seglength); 
   List<Vec3D> xy = new ArrayList<Vec3D>();
   xyline.splitIntoSegments(x,y,seglength, xy, true);
   Line3D xzline = new Line3D(x,z); 
   
-  for (int t = 0; t < i; t++) {
-    stroke(255,255,0);
+  for (int t = 0; t < divideBy; t++) {
+   stroke(255,255,0);
    gfx.line(new Line3D(xy.get(t), xzline.closestPointTo(xy.get(t))));
-    println(xy.get(t));
-   println(xzline.closestPointTo(xy.get(t)));
   }
 }
 
@@ -127,6 +127,7 @@ void controller() {
   controlP5.addSlider("centerX",-1500,1500,500,140,10,80,19).setWindow(controlWindow);
   controlP5.addSlider("centerY",-1500,1500,-1012,140,30,80,19).setWindow(controlWindow);
   controlP5.addSlider("centerZ",-1500,1500,-500,140,50,80,19).setWindow(controlWindow);
+  controlP5.addSlider("divideBy",2,15,5,10,80,80,19).setWindow(controlWindow);
 }
 
 
@@ -141,7 +142,7 @@ void draw() {
   fill(255);
   gfx.mesh(mesh);
   //drawLines(a,b,e,"blah", e);
-  divideEqual(a,b,e,5);
+  divideEqual(a,b,e);
 }
 
 
