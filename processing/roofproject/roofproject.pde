@@ -81,14 +81,16 @@ void divideEqual(Vec3D x, Vec3D y, Vec3D z) {
   Line3D xyline = new Line3D(x,y);
   float xylen = xyline.getLength();
   float seglength = xylen/divideBy;
-  println(seglength); 
   List<Vec3D> xy = new ArrayList<Vec3D>();
   xyline.splitIntoSegments(x,y,seglength, xy, true);
-  Line3D xzline = new Line3D(x,z); 
-  
+  Line3D xzline = new Line3D(x,z);
+  float xzlen = xzline.getLength();
+  float seglength2 = xzlen/divideBy;
+  List<Vec3D> xz = new ArrayList<Vec3D>();
+  xzline.splitIntoSegments(x,z,seglength2, xz, true);
   for (int t = 0; t < divideBy; t++) {
    stroke(255,255,0);
-   gfx.line(new Line3D(xy.get(t), xzline.closestPointTo(xy.get(t))));
+   gfx.line(new Line3D(xy.get(t), xz.get(t)));
   }
 }
 
@@ -128,6 +130,22 @@ void controller() {
   controlP5.addSlider("centerY",-1500,1500,-1012,140,30,80,19).setWindow(controlWindow);
   controlP5.addSlider("centerZ",-1500,1500,-500,140,50,80,19).setWindow(controlWindow);
   controlP5.addSlider("divideBy",2,15,5,10,80,80,19).setWindow(controlWindow);
+  /* weird, setWindow doesn't work
+  RadioButton r = controlP5.addRadioButton("radioButton",20,160).setWindow(controlWindow);
+  r.setColorForeground(color(120)); r.setColorActive(color(255)); r.setColorLabel(color(255)); r.setItemsPerRow(5); r.setSpacingColumn(50);
+  for(int i =0; i < mesh.getNumFaces(); i++){
+   addToRadioButton(r,"triangle"+i,i);
+  */  
+} 
+
+}
+
+void addToRadioButton(RadioButton theRadioButton, String theName, int theValue ) {
+  Toggle t = theRadioButton.addItem(theName,theValue);
+  t.captionLabel().setColorBackground(color(80));
+  t.captionLabel().style().movePadding(2,0,-1,2);
+  t.captionLabel().style().moveMargin(-2,0,0,-3);
+  t.captionLabel().style().backgroundWidth = 46;
 }
 
 
@@ -142,7 +160,7 @@ void draw() {
   fill(255);
   gfx.mesh(mesh);
   //drawLines(a,b,e,"blah", e);
-  divideEqual(a,b,e);
+  divideEqual(e,b,a);
 }
 
 
