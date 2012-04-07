@@ -26,12 +26,10 @@ Vec3D c = new Vec3D(0,-678,0);
 Vec3D d = new Vec3D(700,-898,-203);
 Vec3D e = new Vec3D(0,-688,-893); 
 Vec3D f = new Vec3D(700,-688,-893);
+
  //interpolated vectors
 ZoomLensInterpolation zoomLens = new ZoomLensInterpolation();
 float smoothStep=0.15;
- 
- 
-
 int viewX = 0; 
 float eyeX = 500;
 float eyeY = 500;
@@ -40,8 +38,8 @@ float centerX = 25;
 float centerY = -460;
 float centerZ = -275;
 
-void interpolatePlane() {
- // Vec3D[] ab= new Vec3D(a.interpolateTo(b, -0.5));
+void interpolatePlane(int divisions) {
+  //Vec3D[] ab = new Vec3D(a.interpolateTo(b, -0.5));
   float ablen = a.distanceTo(b);
   println(ablen);
   zoomLens.setLensPos(200,smoothStep);
@@ -49,22 +47,52 @@ void interpolatePlane() {
   for (float x = 0; x < ablen; x++) {
     float t = x / ablen;
     float y = zoomLens.interpolate(0, ablen, t);
-     if (0 == x % 10) {
-      mesh.addFace(a,ab[x],e);
-      Vec3D beam_size = new Vec3D(5,17,ab[x]);
+    Vec3D iii = new Vec3D(a.interpolateTo(b,t));
+     if (0 == x % 100) {
+      //mesh.addFace(a,iii,e);
+      stroke(2,0,120);
+     
+      Vec3D beam_size = new Vec3D(5,17,a.distanceTo(iii));
       TriangleMesh beam=(TriangleMesh)new AABB(new Vec3D(), beam_size).toMesh();
-    // align the Z axis of the box with the direction vector
+      // align the Z axis of the box with the direction vector
       beam.pointTowards(e);
-    // move the box to the correct position
-    beam.transform(new Matrix4x4().translateSelf(e.x,e.y,e.z));
-      
-      
-      
-    }
+      // move the box to the correct position
+      beam.transform(new Matrix4x4().translateSelf(e.x,e.y,e.z));
+      //mesh.removeFace(a,b,e);
+      println(mesh.getNumFaces());
+      //Line3D[x] abiii = lliii;  
+     }
     
   }
-
+  //mesh.faces.remove(0);
 }
+
+void drawLines(Vec3D x,Vec3D y,Vec3D z, String interpolationmethod, Vec3D dir) {
+ // dir = 
+  stroke(255,0,255);
+ // Line3D fd = new Line3D(f,d); 
+ // Line3D ec = new Line3D(e,c); 
+ // gfx.line(new Line3D(e,c));
+  
+}
+
+void divideEqual(Vec3D x, Vec3D y, Vec3D z, int i) {
+  Line3D xyline = new Line3D(x,y);
+  float xylen = xyline.getLength(); 
+  float seglength = xylen/i;
+  List<Vec3D> xy = new ArrayList<Vec3D>();
+  xyline.splitIntoSegments(x,y,seglength, xy, true);
+  Line3D xzline = new Line3D(x,z); 
+  
+  for (int t = 0; t < i; t++) {
+    stroke(255,255,0);
+   gfx.line(new Line3D(xy.get(t), xzline.closestPointTo(xy.get(t))));
+    println(xy.get(t));
+   println(xzline.closestPointTo(xy.get(t)));
+  }
+}
+
+
 
 
 void setup() {
@@ -75,14 +103,14 @@ void setup() {
   frameWork();
   controller();
 
-  interpolatePlane();
+  interpolatePlane(7);
+  
 }
 
 void frameWork() {
-
+ mesh.addFace(a,b,e );
  mesh.addFace(a,b,d );
  mesh.addFace(a,c,d );
- mesh.addFace(a,b,e );
  mesh.addFace(f,b,e );
  mesh.setName("abcd");
 }
@@ -111,9 +139,9 @@ void draw() {
   //rotateX(viewX * 0.01f);
   //rotateY(mouseX * 0.01f);
   fill(255);
-
   gfx.mesh(mesh);
-
+  //drawLines(a,b,e,"blah", e);
+  divideEqual(a,b,e,5);
 }
 
 
