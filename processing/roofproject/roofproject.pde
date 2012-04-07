@@ -13,8 +13,8 @@ import toxi.processing.*;
 import controlP5.*;
 import processing.opengl.*;
 ToxiclibsSupport gfx;
-TriangleMesh[] shapes=new TriangleMesh[600];
 TriangleMesh mesh = new TriangleMesh();
+TriangleMesh beams = new TriangleMesh();
 Vec3D[] vectors;
 ControlP5 controlP5;
 ControlWindow controlWindow;
@@ -50,18 +50,7 @@ void interpolatePlane(int divisions) {
     float y = zoomLens.interpolate(0, ablen, t);
     Vec3D iii = new Vec3D(a.interpolateTo(b,t));
      if (0 == x % 100) {
-      //mesh.addFace(a,iii,e);
-      stroke(2,0,120);
-     
-      Vec3D beam_size = new Vec3D(5,17,a.distanceTo(iii));
-      TriangleMesh beam=(TriangleMesh)new AABB(new Vec3D(), beam_size).toMesh();
-      // align the Z axis of the box with the direction vector
-      beam.pointTowards(e);
-      // move the box to the correct position
-      beam.transform(new Matrix4x4().translateSelf(e.x,e.y,e.z));
-      //mesh.removeFace(a,b,e);
-      println(mesh.getNumFaces());
-      //Line3D[x] abiii = lliii;  
+        ///add lines/beams!
      }
     
   }
@@ -121,14 +110,14 @@ void frameWork() {
 void controller() {
   controlP5 = new ControlP5(this);
   controlWindow = controlP5.addControlWindow("controlP5window",100,100,400,200);
-  controlP5.addButton("Mode", 0,100,120,80,19).setWindow(controlWindow);
+  controlP5.addButton("autocam", 0,100,120,80,19).setWindow(controlWindow);
   controlP5.addButton("Export", 0,100,140,80,19).setWindow(controlWindow);
-  controlP5.addSlider("eyeX",-1500,1500,-500,10,10,80,19).setWindow(controlWindow);
-  controlP5.addSlider("eyeY",-1500,1500,-750,10,30,80,19).setWindow(controlWindow);
-  controlP5.addSlider("eyeZ",-1500,1500,-225,10,50,80,19).setWindow(controlWindow);
-  controlP5.addSlider("centerX",-1500,1500,500,140,10,80,19).setWindow(controlWindow);
-  controlP5.addSlider("centerY",-1500,1500,-1012,140,30,80,19).setWindow(controlWindow);
-  controlP5.addSlider("centerZ",-1500,1500,-500,140,50,80,19).setWindow(controlWindow);
+  controlP5.addSlider("eyeX",-2500,2500,-1500,10,10,80,19).setWindow(controlWindow);
+  controlP5.addSlider("eyeY",-2500,2500,675,10,30,80,19).setWindow(controlWindow);
+  controlP5.addSlider("eyeZ",-2500,2500,1500,10,50,80,19).setWindow(controlWindow);
+  controlP5.addSlider("centerX",-2500,2500,1500,140,10,80,19).setWindow(controlWindow);
+  controlP5.addSlider("centerY",-2500,2500,-862,140,30,80,19).setWindow(controlWindow);
+  controlP5.addSlider("centerZ",-2500,2500,-262,140,50,80,19).setWindow(controlWindow);
   controlP5.addSlider("divideBy",2,15,5,10,80,80,19).setWindow(controlWindow);
   /* weird, setWindow doesn't work
   RadioButton r = controlP5.addRadioButton("radioButton",20,160).setWindow(controlWindow);
@@ -148,6 +137,10 @@ void addToRadioButton(RadioButton theRadioButton, String theName, int theValue )
   t.captionLabel().style().moveMargin(-2,0,0,-3);
   t.captionLabel().style().backgroundWidth = 46;
 }
+
+//void autoCam() {
+// autocam=!autocam ;
+// }
 
 void divideAll() {
   for(int i=0; i < mesh.getNumFaces(); i++) {
@@ -171,11 +164,24 @@ void draw() {
   //drawLines(a,b,e,"blah", e);
   //divideEqual(e,b,a);
   divideAll();
+  beam(a, b);
+  fill(255,50,10);
+    
 }
 
 
-void beam(Vec3D a) {
-  
+void beam(Vec3D x, Vec3D y) {
+      Vec3D beam_size = new Vec3D(x.distanceTo(y)/2,5,17);
+      TriangleMesh beam=(TriangleMesh)new AABB(new Vec3D(), beam_size).toMesh();
+       // align the Z axis of the box with the direction vector
+      beam.pointTowards(y);
+      // move the box to the correct position
+      beam.transform(new Matrix4x4().translateSelf(x.x,x.y,x.z));
+      //beam.translate(x);
+      println(beam.getNumFaces());
+      //beams.addMesh(beam);
+      gfx.mesh(beam);
+      
 }
 
 void keyPressed() {
@@ -186,7 +192,7 @@ void keyPressed() {
   if (key=='-') {
     println("minuspressed");
     int[] faces = mesh.getFacesAsArray();
-    mesh.translate(new Vec3D(-20,-20,-20));
+    mesh.translate(new Vec3D(-20,-20,-20));  //
    // mesh.setName("blaah");
     //println(mesh.getMeshAsVertexArray());
     println(a.interpolateTo(b, 2.5));
