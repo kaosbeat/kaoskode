@@ -57,14 +57,7 @@ void interpolatePlane(int divisions) {
   //mesh.faces.remove(0);
 }
 
-void drawLines(Vec3D x,Vec3D y,Vec3D z, String interpolationmethod, Vec3D dir) {
- // dir = 
-  stroke(255,0,255);
- // Line3D fd = new Line3D(f,d); 
- // Line3D ec = new Line3D(e,c); 
- // gfx.line(new Line3D(e,c));
-  
-}
+
 
 void divideEqual(Vec3D x, Vec3D y, Vec3D z) {
   Line3D xyline = new Line3D(x,y);
@@ -82,6 +75,31 @@ void divideEqual(Vec3D x, Vec3D y, Vec3D z) {
    gfx.line(new Line3D(xy.get(t), xz.get(t)));
   }
 }
+
+String method = "blash";
+
+public List<Vec3D> divideVector(Vec3D x, Vec3D y, String method, Vec3D direction){
+  List<Vec3D> xz = new ArrayList<Vec3D>();
+  return xz;
+}
+
+
+
+
+void drawLines(List<Vec3D> xy, List<Vec3D> yz, color c) {  
+  for (int t = 0; t < xy.size(); t++) {
+   stroke(c);
+   gfx.line(new Line3D(xy.get(t), yz.get(t)));
+  }
+}
+
+//void drawLines(Vec3D x,Vec3D y,Vec3D z, String interpolationmethod, Vec3D dir) {
+ // dir = 
+ // Line3D fd = new Line3D(f,d); 
+ // Line3D ec = new Line3D(e,c); 
+ // gfx.line(new Line3D(e,c));
+  
+//}
 
 
 
@@ -182,6 +200,11 @@ void beam(Vec3D x, Vec3D y) {
       //beams.addMesh(beam);
       gfx.mesh(beam);
       
+}
+
+void beam2(int x, int y,Vec3D k, Vec3D l) {
+  //construct beam at k xyl
+
 }
 
 void keyPressed() {
