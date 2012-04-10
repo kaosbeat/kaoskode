@@ -63,7 +63,8 @@ void frameWork() {
 void divideAll() {
   for(int i=0; i < mesh.getNumFaces(); i++) {
     int[] faces = mesh.getFacesAsArray();
-    divideEqual(mesh.faces.get(i).a,mesh.faces.get(i).b,mesh.faces.get(i).c);
+    planeDivide(new Vec3D(mesh.faces.get(i).a),new Vec3D(mesh.faces.get(i).b),new Vec3D(mesh.faces.get(i).c),10,method);
+    //println(mesh.faces.get(i).a);
   }
 }
 
