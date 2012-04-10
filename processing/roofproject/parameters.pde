@@ -7,12 +7,12 @@ Vec3D e = new Vec3D(0,-688,-893);
 Vec3D f = new Vec3D(700,-688,-893);
 
 //viewsetup
-float eyeX = 500;
-float eyeY = 500;
-float eyeZ = 312;
-float centerX = 25;
-float centerY = -460;
-float centerZ = -275;
+float eyeX = -2500;
+float eyeY = -2500;
+float eyeZ = -2500;
+float centerX = 187;
+float centerY = -312;
+float centerZ = 375;
 
 
 //various variables
